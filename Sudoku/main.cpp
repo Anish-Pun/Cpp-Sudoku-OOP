@@ -1,11 +1,13 @@
-#include "mainwindow.h"
-
 #include <QApplication>
+#include <iostream>
+#include "board.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    MainWindow w;
-    w.show();
-    return a.exec();
+    QApplication app(argc, argv);
+
+    Board board;
+    std::cout << board << std::endl;
+
+    return 0;
 }
