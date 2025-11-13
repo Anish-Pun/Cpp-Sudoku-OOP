@@ -1,18 +1,18 @@
 #ifndef CELL_H
 #define CELL_H
 
-namespace sudoku { // C++ requirement: self-made namespace
+namespace sudoku {
 
-class Cell           // Basis: useful class (represents one Sudoku cell)
+class Cell
 {
 public:
-    Cell();          // OOP: default constructor
+    Cell();
 
-    int  value() const; // OOP: useful member function, const-correct
-    void setValue(int v); // OOP: useful setter for member variable
+    int  value() const;
+    void setValue(int v);
 
 private:
-    int m_value;     // OOP: encapsulation (private member variable)
+    int m_value;
 };
 
 } // namespace sudoku
