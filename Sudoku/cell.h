@@ -1,16 +1,19 @@
 #ifndef CELL_H
 #define CELL_H
 
-class Cell
-{
-public:
-    Cell();
+namespace sudoku {
 
-    int  value() const;
-    void setValue(int v);
+    class Cell
+    {
+    public:
+        Cell();
 
-private:
-    int m_value;
-};
+        int  value() const;
+        void setValue(int v);
+
+    private:
+        int m_value;
+    };
+}
 
 #endif // CELL_H

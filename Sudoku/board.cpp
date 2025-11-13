@@ -1,6 +1,8 @@
 #include "board.h"
 #include <iostream>
 
+namespace sudoku {
+
 Board::Board()
 {
     clear();
@@ -54,3 +56,5 @@ std::ostream& operator<<(std::ostream& out, const Board& board)
     board.print(out);
     return out;
 }
+
+} // namespace sudoku

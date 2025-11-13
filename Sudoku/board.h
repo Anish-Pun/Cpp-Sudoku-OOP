@@ -4,27 +4,31 @@
 #include "cell.h"
 #include <iosfwd>
 
-class Board
-{
-public:
-    static const int Size = 9;
+namespace sudoku {
 
-    Board();
+    class Board
+    {
+    public:
+        static const int Size = 9;
 
-    void clear();
+        Board();
 
-    Cell&       cellAt(int row, int col);
-    const Cell& cellAt(int row, int col) const;
+        void clear();
 
-    void setValue(int row, int col, int value);
-    int  valueAt(int row, int col) const;
+        Cell&       cellAt(int row, int col);
+        const Cell& cellAt(int row, int col) const;
 
-    void print(std::ostream& out) const;
+        void setValue(int row, int col, int value);
+        int  valueAt(int row, int col) const;
 
-private:
-    Cell m_cells[Size][Size];
-};
+        void print(std::ostream& out) const;
 
-std::ostream& operator<<(std::ostream& out, const Board& board);
+    private:
+        Cell m_cells[Size][Size];
+    };
+
+    std::ostream& operator<<(std::ostream& out, const Board& board);
+
+}
 
 #endif // BOARD_H

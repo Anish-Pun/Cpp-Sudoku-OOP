@@ -1,16 +1,19 @@
 #include "cell.h"
 
-Cell::Cell()
-    : m_value(0)
-{
-}
+namespace sudoku {
 
-int Cell::value() const
-{
-    return m_value;
-}
+    Cell::Cell()
+        : m_value(0)
+    {
+    }
 
-void Cell::setValue(int v)
-{
-    m_value = v;
+    int Cell::value() const
+    {
+        return m_value;
+    }
+
+    void Cell::setValue(int v)
+    {
+        m_value = v;
+    }
 }

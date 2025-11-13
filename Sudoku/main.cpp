@@ -1,13 +1,13 @@
 #include <QApplication>
 #include <iostream>
-#include "board.h"
+#include "game.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    Board board;
-    std::cout << board << std::endl;
+    sudoku::Game game;
+    std::cout << game.board() << std::endl;
 
     return 0;
 }
