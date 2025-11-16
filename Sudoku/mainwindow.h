@@ -19,5 +19,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void setupBoard(); // added this helper for the board
 };
 #endif // MAINWINDOW_H
