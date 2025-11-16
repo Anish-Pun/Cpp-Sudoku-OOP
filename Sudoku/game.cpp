@@ -1,4 +1,5 @@
 #include "game.h"
+#include <iostream>
 
 namespace sudoku {
 
@@ -37,6 +38,9 @@ Difficulty Game::difficulty() const
 
 bool Game::setCell(int row, int col, int value)
 {
+    std::cout << "Game::setCell(" << row << ", " << col
+              << ") = " << value << std::endl;
+
     // 0 = clear cell, allowed anywhere inside board
     if (!m_board.isInside(row, col)) {
         return false;
@@ -62,8 +66,7 @@ bool Game::isValid() const
 
 void Game::setupInitialBoard()
 {
-    // For now: empty board.
-    // Later we'll load a puzzle based on m_difficulty.
+    // I will add the puzel based on the difficulty later on
     m_board.clear();
 }
 
