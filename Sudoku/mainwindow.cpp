@@ -1,18 +1,29 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include "game.h"          // sudoku::Game
+#include "board.h"         // sudoku::Board
+
 #include <QHeaderView>
 #include <QFont>
 #include <QBrush>
 #include <QColor>
 #include <QTableWidgetItem>
+#include <QSignalBlocker>
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , m_game(game)
 {
     ui->setupUi(this);
-    setupBoard();
+
+    setupBoardAppearance();
+    loadFromGame();
+
+    // if cell changes then sync with the game ui aswel
+    connect(ui->tableSudoku, &QTableWidget::cellChanged,
+            this, &MainWindow::onCellChanged);
 }
 
 MainWindow::~MainWindow()
@@ -20,11 +31,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setupBoard()
+void MainWindow::setupBoardAppearance()
 {
     auto table = ui->tableSudoku;
 
-    // bais 9x9
     table->clear();
     table->setRowCount(9);
     table->setColumnCount(9);
@@ -34,12 +44,11 @@ void MainWindow::setupBoard()
 
     table->setSelectionMode(QAbstractItemView::SingleSelection);
     table->setSelectionBehavior(QAbstractItemView::SelectItems);
-    table->setEditTriggers(QAbstractItemView::AllEditTriggers); // making cells editable
+    table->setEditTriggers(QAbstractItemView::AllEditTriggers);
 
     table->setShowGrid(true);
     table->setGridStyle(Qt::SolidLine);
 
-    // make cells square
     const int cellSize = 48;
     table->horizontalHeader()->setDefaultSectionSize(cellSize);
     table->verticalHeader()->setDefaultSectionSize(cellSize);
@@ -51,19 +60,17 @@ void MainWindow::setupBoard()
     table->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    // fonts for the numbers
     QFont f = table->font();
     f.setPointSize(16);
     f.setBold(true);
     table->setFont(f);
 
-    // darker grid lines
     table->setStyleSheet("QTableWidget { gridline-color: #404040; }");
 
+    // Maak items met 3x3 blok achtergrond
     for (int row = 0; row < 9; ++row) {
         for (int col = 0; col < 9; ++col) {
             auto *item = new QTableWidgetItem;
-            item->setText(QString());                // start empty
             item->setTextAlignment(Qt::AlignCenter);
 
             bool lightBlock = ((row / 3) + (col / 3)) % 2 == 0;
@@ -73,5 +80,59 @@ void MainWindow::setupBoard()
 
             table->setItem(row, col, item);
         }
+    }
+}
+
+// Board -> UI
+void MainWindow::loadFromGame()
+{
+    auto table = ui->tableSudoku;
+    const sudoku::Board& board = m_game.board();
+
+    QSignalBlocker blocker(table);
+
+    for (int row = 0; row < sudoku::Board::Size; ++row) {
+        for (int col = 0; col < sudoku::Board::Size; ++col) {
+            int v = board.valueAt(row, col);
+            QTableWidgetItem* item = table->item(row, col);
+            if (!item) {
+                item = new QTableWidgetItem;
+                item->setTextAlignment(Qt::AlignCenter);
+                table->setItem(row, col, item);
+            }
+            item->setText(v == 0 ? QString() : QString::number(v));
+        }
+    }
+}
+
+// UI -> Game
+void MainWindow::onCellChanged(int row, int column)
+{
+    auto table = ui->tableSudoku;
+
+    QTableWidgetItem* item = table->item(row, column);
+    if (!item) {
+        return;
+    }
+
+    const QString text = item->text().trimmed();
+    int newValue = 0;
+
+    if (!text.isEmpty()) {
+        bool ok = false;
+        int parsed = text.toInt(&ok);
+        if (!ok || parsed < 1 || parsed > 9) {
+            QSignalBlocker blocker(table);
+            loadFromGame();
+            return;
+        }
+        newValue = parsed;
+    }
+
+    // Probeer move in Game
+    if (!m_game.setCell(row, column, newValue)) {
+        // Ongeldige zet volgens Sudoku-regels -> revert
+        QSignalBlocker blocker(table);
+        loadFromGame();
     }
 }

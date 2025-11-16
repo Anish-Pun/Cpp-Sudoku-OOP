@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     sudoku::Game game;
     std::cout << game.board() << std::endl;
 
-    MainWindow w;
+    MainWindow w(game);
     w.show();
     return app.exec();
 

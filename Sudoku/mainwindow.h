@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+namespace sudoku {
+class Game;
+}
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -14,11 +18,18 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(sudoku::Game& game, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    void setupBoard(); // added this helper for the board
+    sudoku::Game& m_game;
+
+    void setupBoardAppearance();  // alleen looks
+    void loadFromGame();          // Board -> UI
+
+private slots:
+    void onCellChanged(int row, int column); // UI -> Game
 };
+
 #endif // MAINWINDOW_H
