@@ -10,6 +10,7 @@
 #include <QColor>
 #include <QTableWidgetItem>
 #include <QSignalBlocker>
+#include <QMessageBox>
 
 MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
     : QMainWindow(parent)
@@ -134,5 +135,25 @@ void MainWindow::onCellChanged(int row, int column)
         // Ongeldige zet volgens Sudoku-regels -> revert
         QSignalBlocker blocker(table);
         loadFromGame();
+    }
+}
+
+// Checking if ui btns works
+void MainWindow::on_btnCheck_clicked()
+{
+    const sudoku::Board& board = m_game.board();
+
+    bool complete = board.isComplete(); // check if every cell is completed
+    bool valid    = board.isValid();     // check for valid cell
+
+    if (valid && complete) {
+        QMessageBox::information(this, "Sudoku",
+                                 "Gefeliciteerd! Het bord is volledig en correct.");
+    } else if (valid && !complete) {
+        QMessageBox::information(this, "Sudoku",
+                                 "Alle ingevulde cijfers zijn geldig,\nmaar het bord is nog niet compleet.");
+    } else {
+        QMessageBox::warning(this, "Sudoku",
+                             "Er zitten fouten in het bord.\nControleer rijen, kolommen en 3x3 blokken.");
     }
 }
