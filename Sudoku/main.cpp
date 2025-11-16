@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <iostream>
 #include "game.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
@@ -9,5 +10,9 @@ int main(int argc, char *argv[])
     sudoku::Game game;
     std::cout << game.board() << std::endl;
 
-    return 0;
+    MainWindow w;
+    w.show();
+    return app.exec();
+
 }
+
