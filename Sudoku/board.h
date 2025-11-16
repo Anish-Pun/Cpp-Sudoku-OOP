@@ -6,29 +6,40 @@
 
 namespace sudoku {
 
-    class Board
-    {
-    public:
-        static const int Size = 9;
+class Board
+{
+public:
+    static const int Size = 9;
 
-        Board();
+    Board();
 
-        void clear();
+    void clear();
 
-        Cell&       cellAt(int row, int col);
-        const Cell& cellAt(int row, int col) const;
+    Cell&       cellAt(int row, int col);
+    const Cell& cellAt(int row, int col) const;
 
-        void setValue(int row, int col, int value);
-        int  valueAt(int row, int col) const;
+    void setValue(int row, int col, int value);
+    int  valueAt(int row, int col) const;
 
-        void print(std::ostream& out) const;
+    bool isInside(int row, int col) const;
 
-    private:
-        Cell m_cells[Size][Size];
-    };
+    bool isValidMove(int row, int col, int value) const;
 
-    std::ostream& operator<<(std::ostream& out, const Board& board);
+    bool isComplete() const;
+    bool isValid() const;
 
-}
+    void print(std::ostream& out) const;
+
+private:
+    Cell m_cells[Size][Size];
+
+    bool rowHasConflict(int row) const;
+    bool columnHasConflict(int col) const;
+    bool blockHasConflict(int startRow, int startCol) const;
+};
+
+std::ostream& operator<<(std::ostream& out, const Board& board);
+
+} // namespace sudoku
 
 #endif // BOARD_H
