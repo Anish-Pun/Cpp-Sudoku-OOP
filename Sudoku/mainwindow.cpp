@@ -95,14 +95,36 @@ void MainWindow::loadFromGame()
 
     for (int row = 0; row < sudoku::Board::Size; ++row) {
         for (int col = 0; col < sudoku::Board::Size; ++col) {
-            int v = board.valueAt(row, col);
+            int  v     = board.valueAt(row, col);
+            bool fixed = board.isFixed(row, col);
+
             QTableWidgetItem* item = table->item(row, col);
             if (!item) {
                 item = new QTableWidgetItem;
                 item->setTextAlignment(Qt::AlignCenter);
                 table->setItem(row, col, item);
             }
+
             item->setText(v == 0 ? QString() : QString::number(v));
+
+            // flags: fixed = niet editable, user = editable
+            Qt::ItemFlags flags = Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+            if (!fixed) {
+                flags |= Qt::ItemIsEditable;
+            }
+            item->setFlags(flags);
+
+            // stijl: fixed = bold + donkerder, user = normaal
+            QFont f = item->font();
+            if (fixed) {
+                f.setBold(true);
+                item->setFont(f);
+                item->setForeground(QBrush(QColor(0, 0, 0)));
+            } else {
+                f.setBold(false);
+                item->setFont(f);
+                item->setForeground(QBrush(QColor(50, 50, 50)));
+            }
         }
     }
 }
