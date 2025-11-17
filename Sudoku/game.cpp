@@ -1,7 +1,56 @@
 #include "game.h"
 #include <iostream>
+#include <array>
+#include <vector>
+#include <random>
 
 namespace sudoku {
+
+using Grid = std::array<std::array<int, 9>, 9>;
+
+// Een paar voorbeeld-puzzels (0 = leeg)
+static const std::vector<Grid> EASY_PUZZLES = {
+    Grid{{
+        {{5,3,0, 0,7,0, 0,0,0}},
+        {{6,0,0, 1,9,5, 0,0,0}},
+        {{0,9,8, 0,0,0, 0,6,0}},
+
+        {{8,0,0, 0,6,0, 0,0,3}},
+        {{4,0,0, 8,0,3, 0,0,1}},
+        {{7,0,0, 0,2,0, 0,0,6}},
+
+        {{0,6,0, 0,0,0, 2,8,0}},
+        {{0,0,0, 4,1,9, 0,0,5}},
+        {{0,0,0, 0,8,0, 0,7,9}}
+    }},
+    Grid{{
+        {{0,0,0, 2,6,0, 7,0,1}},
+        {{6,8,0, 0,7,0, 0,9,0}},
+        {{1,9,0, 0,0,4, 5,0,0}},
+
+        {{8,2,0, 1,0,0, 0,4,0}},
+        {{0,0,4, 6,0,2, 9,0,0}},
+        {{0,5,0, 0,0,3, 0,2,8}},
+
+        {{0,0,9, 3,0,0, 0,7,4}},
+        {{0,4,0, 0,5,0, 0,3,6}},
+        {{7,0,3, 0,1,8, 0,0,0}}
+    }}
+
+};
+
+// eenvoudige RNG helper
+static std::mt19937& rng()
+{
+    static std::mt19937 gen(std::random_device{}());
+    return gen;
+}
+
+static const Grid& randomFrom(const std::vector<Grid>& list)
+{
+    std::uniform_int_distribution<std::size_t> dist(0, list.size() - 1);
+    return list[dist(rng())];
+}
 
 Game::Game(Difficulty difficulty)
     : m_board()
@@ -41,11 +90,9 @@ bool Game::setCell(int row, int col, int value)
     std::cout << "Game::setCell(" << row << ", " << col
               << ") = " << value << std::endl;
 
-    // 0 = clear cell, allowed anywhere inside board
     if (!m_board.isInside(row, col)) {
         return false;
     }
-
     if (!m_board.isValidMove(row, col, value)) {
         return false;
     }
@@ -64,10 +111,34 @@ bool Game::isValid() const
     return m_board.isValid();
 }
 
+// HIER gebeurt de random Sudoku selectie
 void Game::setupInitialBoard()
 {
-    // I will add the puzel based on the difficulty later on
     m_board.clear();
+
+    const Grid* chosen = nullptr;
+
+    switch (m_difficulty) {
+    case Difficulty::Easy:
+        chosen = &randomFrom(EASY_PUZZLES);
+        break;
+    case Difficulty::Medium:
+        chosen = &randomFrom(EASY_PUZZLES);
+        break;
+    case Difficulty::Hard:
+        chosen = &randomFrom(EASY_PUZZLES);
+        break;
+    }
+
+    if (!chosen) {
+        return;
+    }
+
+    for (int r = 0; r < Board::Size; ++r) {
+        for (int c = 0; c < Board::Size; ++c) {
+            m_board.setValue(r, c, (*chosen)[r][c]);
+        }
+    }
 }
 
 } // namespace sudoku

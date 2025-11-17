@@ -2,10 +2,10 @@
 #define GAME_H
 
 #include "board.h"
+#include <string>
 
 namespace sudoku {
 
-// Difficulty for later puzzles
 enum class Difficulty
 {
     Easy,
@@ -18,25 +18,23 @@ class Game
 public:
     explicit Game(Difficulty difficulty = Difficulty::Easy);
 
-    void reset();                          // reset current game
-    void newGame(Difficulty difficulty);   // change difficulty + reset
+    void reset();
+    void newGame(Difficulty difficulty);
 
     Board&       board();
     const Board& board() const;
 
-    Difficulty difficulty() const;
-
     bool setCell(int row, int col, int value);
-
-    // Board state helpers
     bool isFinished() const;
     bool isValid() const;
+
+    Difficulty difficulty() const;
 
 private:
     Board      m_board;
     Difficulty m_difficulty;
 
-    // Gotta implement real puzzel
+     // implementing real puzzel
     void setupInitialBoard();
 };
 

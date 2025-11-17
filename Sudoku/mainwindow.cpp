@@ -11,6 +11,7 @@
 #include <QTableWidgetItem>
 #include <QSignalBlocker>
 #include <QMessageBox>
+#include <QDebug>
 
 MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
     : QMainWindow(parent)
@@ -156,4 +157,24 @@ void MainWindow::on_btnCheck_clicked()
         QMessageBox::warning(this, "Sudoku",
                              "Er zitten fouten in het bord.\nControleer rijen, kolommen en 3x3 blokken.");
     }
+}
+
+static sudoku::Difficulty difficultyFromCombo(Ui::MainWindow* ui)
+{
+    const QString text = ui->comboDifficulty->currentText();
+    if (text == "Medium")
+        return sudoku::Difficulty::Medium;
+    if (text == "Hard")
+        return sudoku::Difficulty::Hard;
+    return sudoku::Difficulty::Easy;
+}
+
+void MainWindow::on_btnNewGame_clicked()
+{
+    auto diff = difficultyFromCombo(ui);
+
+    m_game.newGame(diff);  // kiest random puzzle op basis van difficulty
+    loadFromGame();        // Board -> UI
+
+    qDebug() << "New game started with difficulty" << ui->comboDifficulty->currentText();
 }

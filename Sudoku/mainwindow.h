@@ -31,6 +31,7 @@ private:
 private slots:
     void onCellChanged(int row, int column); // UI -> Game
     void on_btnCheck_clicked(); // Checking if btns of the ui works
+    void on_btnNewGame_clicked();
 };
 
 #endif // MAINWINDOW_H
