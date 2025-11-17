@@ -12,11 +12,14 @@
 #include <QSignalBlocker>
 #include <QMessageBox>
 #include <QDebug>
+#include <QTimer>
 
 MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_game(game)
+    , m_timer(new QTimer(this))
+    , m_elapsedSeconds(0)
 {
     ui->setupUi(this);
 
@@ -26,6 +29,11 @@ MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
     // if cell changes then sync with the game ui aswel
     connect(ui->tableSudoku, &QTableWidget::cellChanged,
             this, &MainWindow::onCellChanged);
+    //Timer Update every seconds
+    connect(m_timer, &QTimer::timeout,
+            this, &MainWindow::updateTimer);
+
+    on_btnNewGame_clicked();
 }
 
 MainWindow::~MainWindow()
@@ -139,27 +147,46 @@ void MainWindow::onCellChanged(int row, int column)
         return;
     }
 
-    const QString text = item->text().trimmed();
-    int newValue = 0;
+    QString text = item->text().trimmed();
+    int value = 0;
 
+    // Leeg laten = 0 in het bord
     if (!text.isEmpty()) {
         bool ok = false;
-        int parsed = text.toInt(&ok);
-        if (!ok || parsed < 1 || parsed > 9) {
+        int v = text.toInt(&ok);
+        if (!ok || v < 1 || v > 9) {
+            // Ongeldige input: reset naar bord-state
             QSignalBlocker blocker(table);
             loadFromGame();
             return;
         }
-        newValue = parsed;
+        value = v;
     }
 
-    // Probeer move in Game
-    if (!m_game.setCell(row, column, newValue)) {
-        // Ongeldige zet volgens Sudoku-regels -> revert
+    //vraag aan Game of deze zet mag
+    bool accepted = m_game.setCell(row, column, value);
+    if (!accepted) {
+        // Zet werd geweigerd (fixed cell of conflict)
+        QSignalBlocker blocker(table);
+        loadFromGame();
+        return;
+    }
+
+    // zet is OK → bord opnieuw inladen
+    {
         QSignalBlocker blocker(table);
         loadFromGame();
     }
+
+    // check meteen of het spel gewonnen is
+    if (m_game.isFinished()) {
+        m_timer->stop();  // stop timer
+
+        QMessageBox::information(this, "Sudoku",
+                                 "Gefeliciteerd! Het bord is volledig en correct.");
+    }
 }
+
 
 // Checking if ui btns works
 void MainWindow::on_btnCheck_clicked()
@@ -170,6 +197,7 @@ void MainWindow::on_btnCheck_clicked()
     bool valid    = board.isValid();     // check for valid cell
 
     if (valid && complete) {
+        m_timer->stop();
         QMessageBox::information(this, "Sudoku",
                                  "Gefeliciteerd! Het bord is volledig en correct.");
     } else if (valid && !complete) {
@@ -198,5 +226,23 @@ void MainWindow::on_btnNewGame_clicked()
     m_game.newGame(diff);  // kiest random puzzle op basis van difficulty
     loadFromGame();        // Board -> UI
 
+    m_elapsedSeconds = 0;
+    ui->labelTimer->setText("Time: 00:00");
+    m_timer->start(1000);  // elke 1000 ms -> updateTimer()
+
     qDebug() << "New game started with difficulty" << ui->comboDifficulty->currentText();
+}
+
+void MainWindow::updateTimer()
+{
+    ++m_elapsedSeconds;
+
+    int minutes = m_elapsedSeconds / 60;
+    int seconds = m_elapsedSeconds % 60;
+
+    ui->labelTimer->setText(
+        QString("Time: %1:%2")
+            .arg(minutes, 2, 10, QLatin1Char('0'))
+            .arg(seconds, 2, 10, QLatin1Char('0'))
+        );
 }

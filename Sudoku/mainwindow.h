@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+class QTimer;
 
 namespace sudoku {
 class Game;
@@ -25,6 +26,9 @@ private:
     Ui::MainWindow *ui;
     sudoku::Game& m_game;
 
+    QTimer *m_timer;
+    int     m_elapsedSeconds;
+
     void setupBoardAppearance();  // alleen looks
     void loadFromGame();          // Board -> UI
 
@@ -32,6 +36,7 @@ private slots:
     void onCellChanged(int row, int column); // UI -> Game
     void on_btnCheck_clicked(); // Checking if btns of the ui works
     void on_btnNewGame_clicked();
+    void updateTimer();
 };
 
 #endif // MAINWINDOW_H
