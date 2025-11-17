@@ -3,8 +3,12 @@
 
 #include "board.h"
 #include <string>
+#include <array>
+#include <vector>
 
 namespace sudoku {
+
+using Grid = std::array<std::array<int, 9>, 9>;
 
 enum class Difficulty
 {
@@ -30,9 +34,13 @@ public:
 
     Difficulty difficulty() const;
 
+    void solve();  // vul de oplossing in
+
 private:
     Board      m_board;
     Difficulty m_difficulty;
+
+    Grid m_solution;
 
      // implementing real puzzel
     void setupInitialBoard();

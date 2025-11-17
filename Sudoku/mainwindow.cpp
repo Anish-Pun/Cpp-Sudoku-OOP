@@ -233,6 +233,26 @@ void MainWindow::on_btnNewGame_clicked()
     qDebug() << "New game started with difficulty" << ui->comboDifficulty->currentText();
 }
 
+void MainWindow::on_btnSolve_clicked()
+{
+    m_game.solve();
+
+    // Timer stoppen
+    m_timer->stop();
+
+    // UI updaten
+    {
+        QSignalBlocker blocker(ui->tableSudoku);
+        loadFromGame();
+    }
+
+    QMessageBox::information(
+        this,
+        "Sudoku",
+        "De oplossing is ingevuld."
+        );
+}
+
 void MainWindow::updateTimer()
 {
     ++m_elapsedSeconds;

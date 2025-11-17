@@ -6,37 +6,74 @@
 
 namespace sudoku {
 
-using Grid = std::array<std::array<int, 9>, 9>;
+struct Puzzle {
+    Grid puzzle;
+    Grid solution;
+};
 
 // Een paar voorbeeld-puzzels (0 = leeg)
-static const std::vector<Grid> EASY_PUZZLES = {
-    Grid{{
-        {{5,3,0, 0,7,0, 0,0,0}},
-        {{6,0,0, 1,9,5, 0,0,0}},
-        {{0,9,8, 0,0,0, 0,6,0}},
+// Een paar voorbeeld-puzzels (0 = leeg)
+static const std::vector<Puzzle> EASY_PUZZLES = {
+    Puzzle{
+        // puzzle
+        Grid{{
+            {{5,3,0, 0,7,0, 0,0,0}},
+            {{6,0,0, 1,9,5, 0,0,0}},
+            {{0,9,8, 0,0,0, 0,6,0}},
 
-        {{8,0,0, 0,6,0, 0,0,3}},
-        {{4,0,0, 8,0,3, 0,0,1}},
-        {{7,0,0, 0,2,0, 0,0,6}},
+            {{8,0,0, 0,6,0, 0,0,3}},
+            {{4,0,0, 8,0,3, 0,0,1}},
+            {{7,0,0, 0,2,0, 0,0,6}},
 
-        {{0,6,0, 0,0,0, 2,8,0}},
-        {{0,0,0, 4,1,9, 0,0,5}},
-        {{0,0,0, 0,8,0, 0,7,9}}
-    }},
-    Grid{{
-        {{0,0,0, 2,6,0, 7,0,1}},
-        {{6,8,0, 0,7,0, 0,9,0}},
-        {{1,9,0, 0,0,4, 5,0,0}},
+            {{0,6,0, 0,0,0, 2,8,0}},
+            {{0,0,0, 4,1,9, 0,0,5}},
+            {{0,0,0, 0,8,0, 0,7,9}}
+        }},
+        // solution
+        Grid{{
+            {{5,3,4, 6,7,8, 9,1,2}},
+            {{6,7,2, 1,9,5, 3,4,8}},
+            {{1,9,8, 3,4,2, 5,6,7}},
 
-        {{8,2,0, 1,0,0, 0,4,0}},
-        {{0,0,4, 6,0,2, 9,0,0}},
-        {{0,5,0, 0,0,3, 0,2,8}},
+            {{8,5,9, 7,6,1, 4,2,3}},
+            {{4,2,6, 8,5,3, 7,9,1}},
+            {{7,1,3, 9,2,4, 8,5,6}},
 
-        {{0,0,9, 3,0,0, 0,7,4}},
-        {{0,4,0, 0,5,0, 0,3,6}},
-        {{7,0,3, 0,1,8, 0,0,0}}
-    }}
+            {{9,6,1, 5,3,7, 2,8,4}},
+            {{2,8,7, 4,1,9, 6,3,5}},
+            {{3,4,5, 2,8,6, 1,7,9}}
+        }}
+    },
+    Puzzle{
+        // puzzle (de tweede die je al had)
+        Grid{{
+            {{0,0,0, 2,6,0, 7,0,1}},
+            {{6,8,0, 0,7,0, 0,9,0}},
+            {{1,9,0, 0,0,4, 5,0,0}},
 
+            {{8,2,0, 1,0,0, 0,4,0}},
+            {{0,0,4, 6,0,2, 9,0,0}},
+            {{0,5,0, 0,0,3, 0,2,8}},
+
+            {{0,0,9, 3,0,0, 0,7,4}},
+            {{0,4,0, 0,5,0, 0,3,6}},
+            {{7,0,3, 0,1,8, 0,0,0}}
+        }},
+        // solution (de volledige die ik je net gaf)
+        Grid{{
+            {{4,3,5, 2,6,9, 7,8,1}},
+            {{6,8,2, 5,7,1, 4,9,3}},
+            {{1,9,7, 8,3,4, 5,6,2}},
+
+            {{8,2,6, 1,9,5, 3,4,7}},
+            {{3,7,4, 6,8,2, 9,1,5}},
+            {{9,5,1, 7,4,3, 6,2,8}},
+
+            {{5,1,9, 3,2,6, 8,7,4}},
+            {{2,4,8, 9,5,7, 1,3,6}},
+            {{7,6,3, 4,1,8, 2,5,9}}
+        }}
+    }
 };
 
 // eenvoudige RNG helper
@@ -46,7 +83,7 @@ static std::mt19937& rng()
     return gen;
 }
 
-static const Grid& randomFrom(const std::vector<Grid>& list)
+static const Puzzle& randomFrom(const std::vector<Puzzle>& list)
 {
     std::uniform_int_distribution<std::size_t> dist(0, list.size() - 1);
     return list[dist(rng())];
@@ -55,6 +92,7 @@ static const Grid& randomFrom(const std::vector<Grid>& list)
 Game::Game(Difficulty difficulty)
     : m_board()
     , m_difficulty(difficulty)
+    , m_solution{}
 {
     setupInitialBoard();
 }
@@ -119,13 +157,14 @@ void Game::setupInitialBoard()
 {
     m_board.clear();
 
-    const Grid* chosen = nullptr;
+    const Puzzle* chosen = nullptr;
 
     switch (m_difficulty) {
     case Difficulty::Easy:
         chosen = &randomFrom(EASY_PUZZLES);
         break;
     case Difficulty::Medium:
+        // voorlopig zelfde set
         chosen = &randomFrom(EASY_PUZZLES);
         break;
     case Difficulty::Hard:
@@ -137,13 +176,30 @@ void Game::setupInitialBoard()
         return;
     }
 
+    // oplossing opslaan
+    m_solution = chosen->solution;
+
+    // puzzel in board zetten + fixed markeren
     for (int r = 0; r < Board::Size; ++r) {
         for (int c = 0; c < Board::Size; ++c) {
-            int v = (*chosen)[r][c];
+            int v = chosen->puzzle[r][c];
             m_board.setValue(r, c, v);
             m_board.setFixed(r, c, v != 0);
         }
     }
 }
+
+void Game::solve()
+{
+    // Vul hele oplossing in het board
+    for (int r = 0; r < Board::Size; ++r) {
+        for (int c = 0; c < Board::Size; ++c) {
+            int v = m_solution[r][c];
+            m_board.setValue(r, c, v);
+            m_board.setFixed(r, c, true); // alles locken na solve
+        }
+    }
+}
+
 
 } // namespace sudoku
