@@ -13,6 +13,7 @@ void Board::clear()
     for (int r = 0; r < Size; ++r) {
         for (int c = 0; c < Size; ++c) {
             m_cells[r][c].setValue(0);
+            m_cells[r][c].setFixed(false);
         }
     }
 }
@@ -40,6 +41,16 @@ int Board::valueAt(int row, int col) const
 bool Board::isInside(int row, int col) const
 {
     return row >= 0 && row < Size && col >= 0 && col < Size;
+}
+
+bool Board::isFixed(int row, int col) const
+{
+    return m_cells[row][col].isFixed();
+}
+
+void Board::setFixed(int row, int col, bool fixed)
+{
+    m_cells[row][col].setFixed(fixed);
 }
 
 bool Board::isValidMove(int row, int col, int value) const
@@ -179,7 +190,7 @@ void Board::print(std::ostream& out) const
 {
     for (int r = 0; r < Size; ++r) {
         for (int c = 0; c < Size; ++c) {
-            int v = m_cells[r][c].value();
+            int v = valueAt(r, c);
             if (v == 0)
                 out << ". ";
             else

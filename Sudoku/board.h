@@ -23,6 +23,9 @@ public:
 
     bool isInside(int row, int col) const;
 
+    bool isFixed(int row, int col) const;
+    void setFixed(int row, int col, bool fixed);
+
     bool isValidMove(int row, int col, int value) const;
 
     bool isComplete() const;

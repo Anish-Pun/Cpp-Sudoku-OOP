@@ -93,6 +93,9 @@ bool Game::setCell(int row, int col, int value)
     if (!m_board.isInside(row, col)) {
         return false;
     }
+    if (m_board.isFixed(row, col)) {
+        return false;
+    }
     if (!m_board.isValidMove(row, col, value)) {
         return false;
     }
@@ -111,7 +114,7 @@ bool Game::isValid() const
     return m_board.isValid();
 }
 
-// HIER gebeurt de random Sudoku selectie
+// hier gebeurt de random Sudoku selectie
 void Game::setupInitialBoard()
 {
     m_board.clear();
@@ -136,7 +139,9 @@ void Game::setupInitialBoard()
 
     for (int r = 0; r < Board::Size; ++r) {
         for (int c = 0; c < Board::Size; ++c) {
-            m_board.setValue(r, c, (*chosen)[r][c]);
+            int v = (*chosen)[r][c];
+            m_board.setValue(r, c, v);
+            m_board.setFixed(r, c, v != 0);
         }
     }
 }

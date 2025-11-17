@@ -3,7 +3,8 @@
 namespace sudoku {
 
     Cell::Cell()
-        : m_value(0)
+        : m_value(0),
+        m_fixed(false)
     {
     }
 
@@ -16,4 +17,15 @@ namespace sudoku {
     {
         m_value = v;
     }
+
+    bool Cell::isFixed() const
+    {
+        return m_fixed;
+    }
+
+    void Cell::setFixed(bool fixed)
+    {
+        m_fixed = fixed;
+    }
+
 }

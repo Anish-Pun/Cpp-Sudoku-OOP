@@ -11,8 +11,12 @@ public:
     int  value() const;
     void setValue(int v);
 
+    bool isFixed() const;
+    void setFixed(bool fixed);
+
 private:
     int m_value;
+    bool m_fixed;
 };
 
 } // namespace sudoku
