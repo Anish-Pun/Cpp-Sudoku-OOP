@@ -2,9 +2,7 @@
 #define GAME_H
 
 #include "board.h"
-#include <string>
 #include <array>
-#include <vector>
 
 namespace sudoku {
 

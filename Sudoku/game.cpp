@@ -12,7 +12,6 @@ struct Puzzle {
 };
 
 // Een paar voorbeeld-puzzels (0 = leeg)
-// Een paar voorbeeld-puzzels (0 = leeg)
 static const std::vector<Puzzle> EASY_PUZZLES = {
     Puzzle{
         // puzzle
