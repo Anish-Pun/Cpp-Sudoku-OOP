@@ -2,16 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-class QTimer;
-
-namespace sudoku {
-class Game;
-}
+#include <QTimer>
+#include "game.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
-}
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
@@ -19,13 +14,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(sudoku::Game& game, QWidget *parent = nullptr);
+    explicit MainWindow(sudoku::AbstractGame& game, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    sudoku::Game& m_game;
-
+    sudoku::AbstractGame& m_game;
     QTimer *m_timer;
     int     m_elapsedSeconds;
 

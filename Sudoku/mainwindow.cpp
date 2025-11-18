@@ -14,7 +14,7 @@
 #include <QDebug>
 #include <QTimer>
 
-MainWindow::MainWindow(sudoku::Game& game, QWidget *parent)
+MainWindow::MainWindow(sudoku::AbstractGame& game, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , m_game(game)
