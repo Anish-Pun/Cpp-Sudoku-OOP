@@ -166,7 +166,6 @@ void MainWindow::onCellChanged(int row, int column)
     //vraag aan Game of deze zet mag
     bool accepted = m_game.setCell(row, column, value);
     if (!accepted) {
-        // Zet werd geweigerd (fixed cell of conflict)
         QSignalBlocker blocker(table);
         loadFromGame();
         return;
@@ -191,21 +190,66 @@ void MainWindow::onCellChanged(int row, int column)
 // Checking if ui btns works
 void MainWindow::on_btnCheck_clicked()
 {
+    auto  table = ui->tableSudoku;
     const sudoku::Board& board = m_game.board();
 
-    bool complete = board.isComplete(); // check if every cell is completed
-    bool valid    = board.isValid();     // check for valid cell
+    QSignalBlocker blocker(table);  // geen cellChanged-events tijdens kleur-update
 
-    if (valid && complete) {
-        m_timer->stop();
-        QMessageBox::information(this, "Sudoku",
-                                 "Gefeliciteerd! Het bord is volledig en correct.");
-    } else if (valid && !complete) {
-        QMessageBox::information(this, "Sudoku",
-                                 "Alle ingevulde cijfers zijn geldig,\nmaar het bord is nog niet compleet.");
+    bool anyError = false;
+    bool complete = board.isComplete();
+
+    for (int row = 0; row < sudoku::Board::Size; ++row) {
+        for (int col = 0; col < sudoku::Board::Size; ++col) {
+            QTableWidgetItem* item = table->item(row, col);
+            if (!item) continue;
+
+            // 1) basis-achtergrond (3x3 blok patroon)
+            bool lightBlock = ((row / 3) + (col / 3)) % 2 == 0;
+            QColor baseBg = lightBlock
+                                ? QColor(250, 250, 250)
+                                : QColor(230, 230, 230);
+            item->setBackground(QBrush(baseBg));
+
+            // 2) fouten markeren in rood
+            int v = board.valueAt(row, col);
+            if (v != 0 && !board.isValidMove(row, col, v)) {
+                anyError = true;
+                item->setBackground(QBrush(QColor(255, 200, 200))); // lichtrood
+            }
+        }
+    }
+
+    // 3) Bericht tonen
+    if (!complete) {
+        if (anyError) {
+            QMessageBox::warning(
+                this,
+                "Sudoku",
+                "Er zitten fouten in het bord (rood gemarkeerd) en het is nog niet volledig."
+                );
+        } else {
+            QMessageBox::information(
+                this,
+                "Sudoku",
+                "Het bord is nog niet volledig. Ga gerust verder!"
+                );
+        }
     } else {
-        QMessageBox::warning(this, "Sudoku",
-                             "Er zitten fouten in het bord.\nControleer rijen, kolommen en 3x3 blokken.");
+        if (anyError) {
+            QMessageBox::warning(
+                this,
+                "Sudoku",
+                "Het bord is volledig, maar bevat fouten (rood gemarkeerd)."
+                );
+        } else {
+            // volledig én geen fouten → gewonnen
+            m_timer->stop();
+            QMessageBox::information(
+                this,
+                "Sudoku",
+                "Gefeliciteerd! Het bord is volledig en correct."
+                );
+        }
     }
 }
 

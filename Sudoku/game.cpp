@@ -128,13 +128,15 @@ bool Game::setCell(int row, int col, int value)
     std::cout << "Game::setCell(" << row << ", " << col
               << ") = " << value << std::endl;
 
+    // basis checks
     if (!m_board.isInside(row, col)) {
         return false;
     }
     if (m_board.isFixed(row, col)) {
         return false;
     }
-    if (!m_board.isValidMove(row, col, value)) {
+    // 0 = leeg maken
+    if (value < 0 || value > 9) {
         return false;
     }
 

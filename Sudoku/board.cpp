@@ -58,33 +58,36 @@ bool Board::isValidMove(int row, int col, int value) const
     if (!isInside(row, col)) {
         return false;
     }
-
     if (value == 0) {
         return true;
     }
-
     if (value < 1 || value > 9) {
         return false;
     }
 
+    // rij
     for (int c = 0; c < Size; ++c) {
-        if (c != col && valueAt(row, c) == value) {
+        if (c == col) continue; // eigen cel overslaan
+        if (m_cells[row][c].value() == value) {
             return false;
         }
     }
 
+    // kolom
     for (int r = 0; r < Size; ++r) {
-        if (r != row && valueAt(r, col) == value) {
+        if (r == row) continue; // eigen cel overslaan
+        if (m_cells[r][col].value() == value) {
             return false;
         }
     }
 
-    int blockRow = (row / 3) * 3;
-    int blockCol = (col / 3) * 3;
-
-    for (int r = blockRow; r < blockRow + 3; ++r) {
-        for (int c = blockCol; c < blockCol + 3; ++c) {
-            if ((r != row || c != col) && valueAt(r, c) == value) {
+    // 3x3 blok
+    int br = (row / 3) * 3;
+    int bc = (col / 3) * 3;
+    for (int r = br; r < br + 3; ++r) {
+        for (int c = bc; c < bc + 3; ++c) {
+            if (r == row && c == col) continue; // eigen cel overslaan
+            if (m_cells[r][c].value() == value) {
                 return false;
             }
         }
