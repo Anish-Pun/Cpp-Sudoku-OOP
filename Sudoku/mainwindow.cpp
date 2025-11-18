@@ -211,8 +211,11 @@ void MainWindow::on_btnCheck_clicked()
             item->setBackground(QBrush(baseBg));
 
             // 2) fouten markeren in rood
-            int v = board.valueAt(row, col);
-            if (v != 0 && !board.isValidMove(row, col, v)) {
+            int  v     = board.valueAt(row, col);
+            bool fixed = board.isFixed(row, col);
+
+            // fixed cells niet rood markeren
+            if (!fixed && v != 0 && !board.isValidMove(row, col, v)) {
                 anyError = true;
                 item->setBackground(QBrush(QColor(255, 200, 200))); // lichtrood
             }
