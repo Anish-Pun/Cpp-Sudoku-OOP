@@ -147,6 +147,13 @@ void MainWindow::onCellChanged(int row, int column)
         return;
     }
 
+    // achtergrond terugzetten naar het normale 3x3-blok patroon
+    bool   lightBlock = ((row / 3) + (column / 3)) % 2 == 0;
+    QColor baseBg     = lightBlock
+                        ? QColor(250, 250, 250)
+                        : QColor(230, 230, 230);
+    item->setBackground(QBrush(baseBg));
+
     QString text = item->text().trimmed();
     int value = 0;
 
