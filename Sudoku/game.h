@@ -34,6 +34,8 @@ public:
     virtual bool setCell(int row, int col, int value) = 0;
 
     virtual void solve() = 0;
+
+    virtual int solutionAt(int row, int col) const = 0;
 };
 
 class Game : public AbstractGame
@@ -55,6 +57,7 @@ public:
     bool setCell(int row, int col, int value) override;
 
     void solve() override; // vul de oplossing in
+    int solutionAt(int row, int col) const override;
 
 private:
     Board      m_board;

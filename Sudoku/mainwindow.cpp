@@ -214,10 +214,14 @@ void MainWindow::on_btnCheck_clicked()
             int  v     = board.valueAt(row, col);
             bool fixed = board.isFixed(row, col);
 
-            // fixed cells niet rood markeren
-            if (!fixed && v != 0 && !board.isValidMove(row, col, v)) {
-                anyError = true;
-                item->setBackground(QBrush(QColor(255, 200, 200))); // lichtrood
+            // alleen door de speler ingevulde vakjes controleren
+            if (!fixed && v != 0) {
+                int correct = m_game.solutionAt(row, col);
+
+                if (v != correct) {
+                    anyError = true;
+                    item->setBackground(QBrush(QColor(255, 200, 200))); // lichtrood
+                }
             }
         }
     }

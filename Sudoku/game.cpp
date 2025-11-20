@@ -225,6 +225,14 @@ static void removeCellsForDifficulty(Grid& g, Difficulty diff)
     }
 }
 
+int Game::solutionAt(int row, int col) const
+{
+    if (row < 0 || row >= Board::Size || col < 0 || col >= Board::Size) {
+        return 0;
+    }
+    return m_solution[row][col];
+}
+
 Game::Game(Difficulty difficulty)
     : m_board()
     , m_difficulty(difficulty)
