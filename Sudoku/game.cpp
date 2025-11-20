@@ -3,6 +3,8 @@
 #include <array>
 #include <vector>
 #include <random>
+#include <algorithm>
+#include <numeric>
 
 namespace sudoku {
 
@@ -125,6 +127,104 @@ static const Puzzle& randomFrom(const std::vector<Puzzle>& list)
     return list[dist(rng())];
 }
 
+// Sudoku helper
+static bool isSafe(const Grid& g, int row, int col, int value)
+{
+    // row
+    for (int c = 0; c < 9; ++c) {
+        if (g[row][c] == value) return false;
+    }
+    // col
+    for (int r = 0; r < 9; ++r) {
+        if (g[r][col] == value) return false;
+    }
+    // 3x3 block
+    int br = (row / 3) * 3;
+    int bc = (col / 3) * 3;
+    for (int r = br; r < br + 3; ++r) {
+        for (int c = bc; c < bc + 3; ++c) {
+            if (g[r][c] == value) return false;
+        }
+    }
+    return true;
+}
+
+static bool findEmpty(const Grid& g, int& row, int& col)
+{
+    for (int r = 0; r < 9; ++r) {
+        for (int c = 0; c < 9; ++c) {
+            if (g[r][c] == 0) {
+                row = r;
+                col = c;
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// backtracking to fill an empty grid into a full valid solution
+static bool fillGrid(Grid& g)
+{
+    int row = 0, col = 0;
+    if (!findEmpty(g, row, col)) {
+        return true; // no empty cell => solved
+    }
+
+    std::array<int, 9> nums = {1,2,3,4,5,6,7,8,9};
+    // random order for variation
+    std::shuffle(nums.begin(), nums.end(), rng());
+
+    for (int v : nums) {
+        if (isSafe(g, row, col, v)) {
+            g[row][col] = v;
+            if (fillGrid(g)) {
+                return true;
+            }
+            g[row][col] = 0;
+        }
+    }
+    return false; // backtrack
+}
+
+static Grid generateSolvedGrid()
+{
+    Grid g{};
+    // all zeros by default
+    fillGrid(g);
+    return g;
+}
+
+static void removeCellsForDifficulty(Grid& g, Difficulty diff)
+{
+    int targetClues = 40; // default easy-ish
+    switch (diff) {
+    case Difficulty::Easy:   targetClues = 50; break;
+    case Difficulty::Medium: targetClues = 40; break;
+    case Difficulty::Hard:   targetClues = 30; break;
+    }
+
+    const int totalCells   = 81;
+    int       toRemove     = totalCells - targetClues;
+    if (toRemove <= 0) return;
+
+    std::vector<int> indices(totalCells);
+    std::iota(indices.begin(), indices.end(), 0);
+    std::shuffle(indices.begin(), indices.end(), rng());
+
+    int removed = 0;
+    for (int idx : indices) {
+        if (removed >= toRemove) break;
+
+        int r = idx / 9;
+        int c = idx % 9;
+        if (g[r][c] != 0) {
+            g[r][c] = 0;
+            ++removed;
+        }
+    }
+}
+
 Game::Game(Difficulty difficulty)
     : m_board()
     , m_difficulty(difficulty)
@@ -195,31 +295,21 @@ void Game::setupInitialBoard()
 {
     m_board.clear();
 
-    const Puzzle* chosen = nullptr;
+    // genereer een volledig opgelost grid
+    Grid full = generateSolvedGrid();
 
-    switch (m_difficulty) {
-    case Difficulty::Easy:
-        chosen = &randomFrom(EASY_PUZZLES);
-        break;
-    case Difficulty::Medium:
-        chosen = &randomFrom(MEDIUM_PUZZLES);
-        break;
-    case Difficulty::Hard:
-        chosen = &randomFrom(HARD_PUZZLES);
-        break;
-    }
 
-    if (!chosen) {
-        return;
-    }
+    // maak een puzzel door waarden te verwijderen afhankelijk van de difficulty
+    Grid puzzle = full;
+    removeCellsForDifficulty(puzzle, m_difficulty);
 
     // oplossing opslaan
-    m_solution = chosen->solution;
+    m_solution = full;
 
     // puzzel in board zetten + fixed markeren
     for (int r = 0; r < Board::Size; ++r) {
         for (int c = 0; c < Board::Size; ++c) {
-            int v = chosen->puzzle[r][c];
+            int v = puzzle[r][c];
             m_board.setValue(r, c, v);
             m_board.setFixed(r, c, v != 0);
         }
