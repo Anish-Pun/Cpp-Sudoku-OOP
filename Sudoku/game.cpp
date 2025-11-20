@@ -42,9 +42,13 @@ static const std::vector<Puzzle> EASY_PUZZLES = {
             {{2,8,7, 4,1,9, 6,3,5}},
             {{3,4,5, 2,8,6, 1,7,9}}
         }}
-    },
+    }
+};
+
+// MEDIUM
+static const std::vector<Puzzle> MEDIUM_PUZZLES = {
     Puzzle{
-        // puzzle (de tweede die je al had)
+        // puzzle
         Grid{{
             {{0,0,0, 2,6,0, 7,0,1}},
             {{6,8,0, 0,7,0, 0,9,0}},
@@ -58,7 +62,7 @@ static const std::vector<Puzzle> EASY_PUZZLES = {
             {{0,4,0, 0,5,0, 0,3,6}},
             {{7,0,3, 0,1,8, 0,0,0}}
         }},
-        // solution (de volledige die ik je net gaf)
+        // solution
         Grid{{
             {{4,3,5, 2,6,9, 7,8,1}},
             {{6,8,2, 5,7,1, 4,9,3}},
@@ -75,6 +79,39 @@ static const std::vector<Puzzle> EASY_PUZZLES = {
     }
 };
 
+// HARD:
+static const std::vector<Puzzle> HARD_PUZZLES = {
+    Puzzle{
+        // puzzle
+        Grid{{
+            {{4,0,0, 2,0,9, 0,0,1}},
+            {{0,8,0, 0,7,0, 4,0,0}},
+            {{1,0,0, 8,0,0, 0,6,0}},
+
+            {{8,0,6, 0,9,0, 0,0,7}},
+            {{3,0,0, 0,8,0, 0,0,5}},
+            {{0,5,0, 7,0,0, 0,2,0}},
+
+            {{5,0,0, 0,0,6, 0,0,4}},
+            {{0,4,0, 9,5,0, 0,0,0}},
+            {{7,0,0, 0,1,0, 0,5,0}}
+        }},
+        // solution
+        Grid{{
+            {{4,3,5, 2,6,9, 7,8,1}},
+            {{6,8,2, 5,7,1, 4,9,3}},
+            {{1,9,7, 8,3,4, 5,6,2}},
+
+            {{8,2,6, 1,9,5, 3,4,7}},
+            {{3,7,4, 6,8,2, 9,1,5}},
+            {{9,5,1, 7,4,3, 6,2,8}},
+
+            {{5,1,9, 3,2,6, 8,7,4}},
+            {{2,4,8, 9,5,7, 1,3,6}},
+            {{7,6,3, 4,1,8, 2,5,9}}
+        }}
+    }
+};
 // eenvoudige RNG helper
 static std::mt19937& rng()
 {
@@ -153,7 +190,7 @@ bool Game::isValid() const
     return m_board.isValid();
 }
 
-// hier gebeurt de random Sudoku selectie
+// hier gebeurt Sudoku selectie
 void Game::setupInitialBoard()
 {
     m_board.clear();
@@ -165,11 +202,10 @@ void Game::setupInitialBoard()
         chosen = &randomFrom(EASY_PUZZLES);
         break;
     case Difficulty::Medium:
-        // voorlopig zelfde set
-        chosen = &randomFrom(EASY_PUZZLES);
+        chosen = &randomFrom(MEDIUM_PUZZLES);
         break;
     case Difficulty::Hard:
-        chosen = &randomFrom(EASY_PUZZLES);
+        chosen = &randomFrom(HARD_PUZZLES);
         break;
     }
 
