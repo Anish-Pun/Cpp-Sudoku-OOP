@@ -18,6 +18,8 @@ public:
     explicit Board(int fillValue);
     // OOP: parameterized constructor
     Board(const std::array<std::array<int, Size>, Size>& values);
+    // OOP: copy constructor
+    Board(const Board& other);
 
     void clear();
 

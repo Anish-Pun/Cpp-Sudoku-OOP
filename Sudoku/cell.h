@@ -10,6 +10,8 @@ public:
     Cell();
     // OOP: parameterized constructor
     Cell(int value, bool fixed = false);
+    // OOP: copy constructor
+    Cell(const Cell& other);
 
     int  value() const;
     void setValue(int v);

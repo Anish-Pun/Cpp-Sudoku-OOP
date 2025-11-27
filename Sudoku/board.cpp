@@ -30,6 +30,17 @@ Board::Board(const std::array<std::array<int, Size>, Size>& values)
     }
 }
 
+// OOP: copy constructor
+Board::Board(const Board& other)
+{
+    for (int r = 0; r < Size; ++r) {
+        for (int c = 0; c < Size; ++c) {
+            m_cells[r][c].setValue(other.m_cells[r][c].value());
+            m_cells[r][c].setFixed(other.m_cells[r][c].isFixed());
+        }
+    }
+}
+
 void Board::clear()
 {
     for (int r = 0; r < Size; ++r) {

@@ -15,6 +15,13 @@ namespace sudoku {
     {
     }
 
+    // OOP: copy constructor
+    Cell::Cell(const Cell& other)
+        : m_value(other.m_value),
+        m_fixed(other.m_fixed)
+    {
+    }
+
     int Cell::value() const
     {
         return m_value;
