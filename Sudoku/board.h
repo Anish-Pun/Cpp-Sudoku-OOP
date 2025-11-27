@@ -31,7 +31,11 @@ public:
     void setValue(int row, int col, int value);
     int  valueAt(int row, int col) const;
 
-    bool isInside(int row, int col) const;
+    // OOP: inline functie zodat snelle bounds-check direct in header zit
+    bool isInside(int row, int col) const
+    {
+        return row >= 0 && row < Size && col >= 0 && col < Size;
+    }
 
     bool isFixed(int row, int col) const;
     void setFixed(int row, int col, bool fixed);

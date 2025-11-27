@@ -78,11 +78,6 @@ int Board::valueAt(int row, int col) const
     return m_cells[row][col].value();
 }
 
-bool Board::isInside(int row, int col) const
-{
-    return row >= 0 && row < Size && col >= 0 && col < Size;
-}
-
 bool Board::isFixed(int row, int col) const
 {
     return m_cells[row][col].isFixed();
