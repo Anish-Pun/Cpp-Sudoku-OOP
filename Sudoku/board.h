@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include "cell.h"
+#include <array>
 #include <iosfwd>
 
 namespace sudoku {
@@ -13,6 +14,10 @@ public:
     static const int Size = 9;
 
     Board();
+    // OOP: parameterized constructor
+    explicit Board(int fillValue);
+    // OOP: parameterized constructor
+    Board(const std::array<std::array<int, Size>, Size>& values);
 
     void clear();
 

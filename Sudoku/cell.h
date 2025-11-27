@@ -8,6 +8,8 @@ class Cell
 {
 public:
     Cell();
+    // OOP: parameterized constructor
+    Cell(int value, bool fixed = false);
 
     int  value() const;
     void setValue(int v);

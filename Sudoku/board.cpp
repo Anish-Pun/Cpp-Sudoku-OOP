@@ -8,6 +8,28 @@ Board::Board()
     clear();
 }
 
+// OOP: parameterized constructor
+Board::Board(int fillValue)
+{
+    for (int r = 0; r < Size; ++r) {
+        for (int c = 0; c < Size; ++c) {
+            m_cells[r][c].setValue(fillValue);
+            m_cells[r][c].setFixed(false);
+        }
+    }
+}
+
+// OOP: parameterized constructor
+Board::Board(const std::array<std::array<int, Size>, Size>& values)
+{
+    for (int r = 0; r < Size; ++r) {
+        for (int c = 0; c < Size; ++c) {
+            m_cells[r][c].setValue(values[r][c]);
+            m_cells[r][c].setFixed(false);
+        }
+    }
+}
+
 void Board::clear()
 {
     for (int r = 0; r < Size; ++r) {

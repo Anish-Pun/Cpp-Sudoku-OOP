@@ -8,6 +8,13 @@ namespace sudoku {
     {
     }
 
+    // OOP: parameterized constructor
+    Cell::Cell(int value, bool fixed)
+        : m_value(value),
+        m_fixed(fixed)
+    {
+    }
+
     int Cell::value() const
     {
         return m_value;
