@@ -2,9 +2,9 @@
 
 namespace sudoku {
 
+    // OOP: constructor forwarding naar de parameterized versie
     Cell::Cell()
-        : m_value(0),
-        m_fixed(false)
+        : Cell(0, false)
     {
     }
 

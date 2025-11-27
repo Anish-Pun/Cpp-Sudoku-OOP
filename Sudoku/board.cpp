@@ -3,9 +3,10 @@
 
 namespace sudoku {
 
+// OOP: constructor forwarding naar de versie met fillValue
 Board::Board()
+    : Board(0)
 {
-    clear();
 }
 
 // OOP: parameterized constructor
