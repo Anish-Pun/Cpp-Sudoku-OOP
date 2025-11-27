@@ -3,6 +3,7 @@
 
 namespace sudoku {
 
+// OOP: Encapsulation
 class Cell
 {
 public:
@@ -14,7 +15,7 @@ public:
     bool isFixed() const;
     void setFixed(bool fixed);
 
-private:
+private: // OOP: Encapsulation
     int m_value;
     bool m_fixed;
 };

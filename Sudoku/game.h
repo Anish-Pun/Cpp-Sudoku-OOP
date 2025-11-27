@@ -15,12 +15,13 @@ enum class Difficulty
     Hard
 };
 
+// OOP: Abstraction
 class AbstractGame
 {
 public:
     virtual ~AbstractGame() = default;
 
-    virtual void reset() = 0;
+    virtual void reset() = 0; // OOP: Polymorphism
     virtual void newGame(Difficulty difficulty) = 0;
 
     virtual Board& board() = 0;
@@ -38,6 +39,7 @@ public:
     virtual int solutionAt(int row, int col) const = 0;
 };
 
+// OOP: Inheritance
 class Game : public AbstractGame
 {
 public:
@@ -56,13 +58,13 @@ public:
 
     bool setCell(int row, int col, int value) override;
 
-    void solve() override; // vul de oplossing in
+    void solve() override; // OOP: Polymorphism
     int solutionAt(int row, int col) const override;
 
 private:
-    Board      m_board;
-    Difficulty m_difficulty;
-    Grid       m_solution;
+    Board      m_board;      // OOP: Composition
+    Difficulty m_difficulty; // OOP: Encapsulation
+    Grid       m_solution;   // OOP: Encapsulation
 
     void setupInitialBoard();
 };

@@ -6,6 +6,7 @@
 
 namespace sudoku {
 
+// OOP: Abstraction
 class Board
 {
 public:
@@ -34,6 +35,7 @@ public:
     void print(std::ostream& out) const;
 
 private:
+    // OOP: Object composition
     Cell m_cells[Size][Size];
 
     bool rowHasConflict(int row) const;

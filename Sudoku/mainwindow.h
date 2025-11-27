@@ -9,17 +9,19 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+// OOP: Inheritance
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
+    // OOP: Polymorphism
     explicit MainWindow(sudoku::AbstractGame& game, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
-    sudoku::AbstractGame& m_game;
+    sudoku::AbstractGame& m_game; // OOP: Composition
     QTimer *m_timer;
     int     m_elapsedSeconds;
 
