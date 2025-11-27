@@ -44,6 +44,8 @@ class Game : public AbstractGame
 {
 public:
     explicit Game(Difficulty difficulty = Difficulty::Easy);
+    // OOP: destructor
+    ~Game() override;
 
     void reset() override;
     void newGame(Difficulty difficulty) override;

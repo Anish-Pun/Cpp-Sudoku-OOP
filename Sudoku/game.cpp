@@ -129,6 +129,13 @@ Game::Game(Difficulty difficulty)
     setupInitialBoard();
 }
 
+// OOP: destructor herstelt het spel naar een lege staat voor het uit scope gaat
+Game::~Game()
+{
+    m_board.clear();
+    m_solution = {};
+}
+
 void Game::reset()
 {
     setupInitialBoard();

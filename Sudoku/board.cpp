@@ -41,6 +41,12 @@ Board::Board(const Board& other)
     }
 }
 
+// OOP: destructor clear het bord zodat cellen geen restwaarden houden
+Board::~Board()
+{
+    clear();
+}
+
 void Board::clear()
 {
     for (int r = 0; r < Size; ++r) {
