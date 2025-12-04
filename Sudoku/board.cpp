@@ -3,6 +3,28 @@
 
 namespace sudoku {
 
+namespace {
+    // OOP: templated hulpfunctie om dubbele waarden te detecteren
+    template<typename ValueProvider>
+    bool hasDuplicateValue(ValueProvider&& provider, int count)
+    {
+        bool seen[10] = { false };
+
+        for (int idx = 0; idx < count; ++idx) {
+            int v = provider(idx);
+            if (v == 0) {
+                continue;
+            }
+            if (seen[v]) {
+                return true;
+            }
+            seen[v] = true;
+        }
+
+        return false;
+    }
+}
+
 // OOP: constructor forwarding naar de versie met fillValue
 Board::Board()
     : Board(0)
@@ -133,58 +155,31 @@ bool Board::isValidMove(int row, int col, int value) const
 
 bool Board::rowHasConflict(int row) const
 {
-    bool seen[10] = { false };
-
-    for (int c = 0; c < Size; ++c) {
-        int v = valueAt(row, c);
-        if (v == 0) {
-            continue;
-        }
-        if (seen[v]) {
-            return true;
-        }
-        seen[v] = true;
-    }
-
-    return false;
+    return hasDuplicateValue([
+        this, row
+    ](int idx) {
+        return valueAt(row, idx);
+    }, Size);
 }
 
 bool Board::columnHasConflict(int col) const
 {
-    bool seen[10] = { false };
-
-    for (int r = 0; r < Size; ++r) {
-        int v = valueAt(r, col);
-        if (v == 0) {
-            continue;
-        }
-        if (seen[v]) {
-            return true;
-        }
-        seen[v] = true;
-    }
-
-    return false;
+    return hasDuplicateValue([
+        this, col
+    ](int idx) {
+        return valueAt(idx, col);
+    }, Size);
 }
 
 bool Board::blockHasConflict(int startRow, int startCol) const
 {
-    bool seen[10] = { false };
-
-    for (int r = 0; r < 3; ++r) {
-        for (int c = 0; c < 3; ++c) {
-            int v = valueAt(startRow + r, startCol + c);
-            if (v == 0) {
-                continue;
-            }
-            if (seen[v]) {
-                return true;
-            }
-            seen[v] = true;
-        }
-    }
-
-    return false;
+    return hasDuplicateValue([
+        this, startRow, startCol
+    ](int idx) {
+        int r = startRow + idx / 3;
+        int c = startCol + idx % 3;
+        return valueAt(r, c);
+    }, 9);
 }
 
 bool Board::isComplete() const
