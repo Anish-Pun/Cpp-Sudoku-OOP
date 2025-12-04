@@ -149,12 +149,12 @@ void MainWindow::onCellChanged(int row, int column)
 
     // achtergrond terugzetten naar het normale 3x3-blok patroon
     bool   lightBlock = ((row / 3) + (column / 3)) % 2 == 0;
-    QColor baseBg     = lightBlock
+    const QColor& baseBg = lightBlock
                         ? QColor(250, 250, 250)
                         : QColor(230, 230, 230);
     item->setBackground(QBrush(baseBg));
 
-    QString text = item->text().trimmed();
+    const QString& text = item->text().trimmed();
     int value = 0;
 
     // Leeg laten = 0 in het bord
@@ -212,7 +212,7 @@ void MainWindow::on_btnCheck_clicked()
 
             // 1) basis-achtergrond (3x3 blok patroon)
             bool lightBlock = ((row / 3) + (col / 3)) % 2 == 0;
-            QColor baseBg = lightBlock
+            const QColor& baseBg = lightBlock
                                 ? QColor(250, 250, 250)
                                 : QColor(230, 230, 230);
             item->setBackground(QBrush(baseBg));
@@ -269,7 +269,7 @@ void MainWindow::on_btnCheck_clicked()
 
 static sudoku::Difficulty difficultyFromCombo(Ui::MainWindow* ui)
 {
-    const QString text = ui->comboDifficulty->currentText();
+    const QString& text = ui->comboDifficulty->currentText();
     if (text == "Medium")
         return sudoku::Difficulty::Medium;
     if (text == "Hard")

@@ -199,7 +199,7 @@ void Game::setupInitialBoard()
     m_board.clear();
 
     // genereer een volledig opgelost grid
-    Grid full = generateSolvedGrid();
+    const Grid& full = generateSolvedGrid();
 
 
     // maak een puzzel door waarden te verwijderen afhankelijk van de difficulty
