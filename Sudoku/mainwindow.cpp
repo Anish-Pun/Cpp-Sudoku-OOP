@@ -267,7 +267,7 @@ void MainWindow::on_btnCheck_clicked()
     }
 }
 
-static sudoku::Difficulty difficultyFromCombo(Ui::MainWindow* ui)
+static sudoku::Difficulty difficultyFromCombo(const Ui::MainWindow* ui)
 {
     const QString& text = ui->comboDifficulty->currentText();
     if (text == "Medium")
