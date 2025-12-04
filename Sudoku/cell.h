@@ -1,6 +1,8 @@
 #ifndef CELL_H
 #define CELL_H
 
+#include <cstdint>
+
 namespace sudoku {
 
 // OOP: Encapsulation
@@ -20,7 +22,7 @@ public:
     void setFixed(bool fixed);
 
 private: // OOP: Encapsulation
-    int m_value;
+    std::uint8_t m_value;
     bool m_fixed;
 };
 

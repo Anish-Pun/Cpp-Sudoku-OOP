@@ -10,7 +10,7 @@ namespace sudoku {
 
     // OOP: parameterized constructor
     Cell::Cell(int value, bool fixed)
-        : m_value(value),
+        : m_value(static_cast<std::uint8_t>(value)),
         m_fixed(fixed)
     {
     }
@@ -29,7 +29,10 @@ namespace sudoku {
 
     void Cell::setValue(int v)
     {
-        m_value = v;
+        // keep API accepting int but store as uint8_t internally
+        if (v < 0) v = 0;
+        if (v > 9) v = 9;
+        m_value = static_cast<std::uint8_t>(v);
     }
 
     bool Cell::isFixed() const

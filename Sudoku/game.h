@@ -3,10 +3,11 @@
 
 #include "board.h"
 #include <array>
+#include <cstdint>
 
 namespace sudoku {
 
-using Grid = std::array<std::array<int, 9>, 9>;
+using Grid = std::array<std::array<std::uint8_t, 9>, 9>;
 
 enum class Difficulty
 {
