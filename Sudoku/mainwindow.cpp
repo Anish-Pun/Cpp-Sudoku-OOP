@@ -320,6 +320,15 @@ void MainWindow::on_btnStats_clicked()
     PlayerStats *stats = new PlayerStats(this);
     stats->setAttribute(Qt::WA_DeleteOnClose);
     stats->setModal(false); // allow interacting with main window too
+
+    if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
+        stats->setStats(
+            game->gamesPlayed(),
+            game->gamesWon(),
+            game->bestTimeSeconds(),
+            game->averageTimeSeconds());
+    }
+
     stats->show();
 }
 

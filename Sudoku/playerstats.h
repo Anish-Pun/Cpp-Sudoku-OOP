@@ -15,6 +15,11 @@ public:
     explicit PlayerStats(QWidget *parent = nullptr);
     ~PlayerStats();
 
+    void setStats(int gamesPlayed,
+                  int gamesWon,
+                  int bestTimeSeconds,
+                  double averageTimeSeconds);
+
 private:
     Ui::PlayerStats *ui;
 };
