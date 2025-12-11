@@ -8,16 +8,7 @@
     ```
 
 ---
-
-## Steps
-
-### **✔️ Important — Step 1 & 2**
-1. Go to the directory where you cloned the repository.  
-2. Open the folder named **`Sudoku`** and **delete the folder named `build`** (this avoids CMake path/drive conflicts).
-
----
-
-### Continue:
+### Steps:
 3. Open **Qt Creator**.  
 4. Click **Open Project** (top-right or File → Open File or Project).  
 5. Navigate to the folder where you cloned the repo.  
