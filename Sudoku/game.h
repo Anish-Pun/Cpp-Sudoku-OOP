@@ -64,10 +64,21 @@ public:
     void solve() override; // OOP: Polymorphism
     int solutionAt(int row, int col) const override;
 
+    // stats getters
+    int gamesPlayed() const { return m_gamesPlayed; }
+    int gamesWon() const { return m_gamesWon; }
+    int bestTimeSeconds() const { return m_bestTimeSeconds; }
+    double averageTimeSeconds() const;
+
 private:
     Board      m_board;      // OOP: Composition
     Difficulty m_difficulty; // OOP: Encapsulation
     Grid       m_solution;   // OOP: Encapsulation
+
+    int  m_gamesPlayed      = 0;
+    int  m_gamesWon         = 0;
+    int  m_bestTimeSeconds  = -1;
+    long m_totalTimeSeconds = 0;
 
     void setupInitialBoard();
 };

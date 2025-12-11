@@ -113,6 +113,14 @@ static void removeCellsForDifficulty(Grid& g, Difficulty diff)
     }
 }
 
+double Game::averageTimeSeconds() const
+{
+    if (m_gamesWon == 0) {
+        return 0.0;
+    }
+    return static_cast<double>(m_totalTimeSeconds) / m_gamesWon;
+}
+
 int Game::solutionAt(int row, int col) const
 {
     if (row < 0 || row >= Board::Size || col < 0 || col >= Board::Size) {
@@ -144,6 +152,7 @@ void Game::reset()
 void Game::newGame(Difficulty difficulty)
 {
     m_difficulty = difficulty;
+    ++m_gamesPlayed;
     setupInitialBoard();
 }
 
