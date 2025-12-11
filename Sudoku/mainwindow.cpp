@@ -64,9 +64,12 @@ void MainWindow::setupBoardAppearance()
     table->horizontalHeader()->setDefaultSectionSize(cellSize);
     table->verticalHeader()->setDefaultSectionSize(cellSize);
 
+    // Let the board expand with the window instead of staying fixed-size
     const int size = cellSize * 9 + 2 * table->frameWidth();
     table->setMinimumSize(size, size);
-    table->setMaximumSize(size, size);
+    table->setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     table->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
