@@ -189,6 +189,9 @@ void MainWindow::onCellChanged(int row, int column)
     if (m_game.isFinished()) {
         m_timer->stop();  // stop timer
 
+        if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
+            game->registerFinishedGame(m_elapsedSeconds);
+        }
         QMessageBox::information(this, "Sudoku",
                                  "Gefeliciteerd! Het bord is volledig en correct.");
     }

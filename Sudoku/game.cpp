@@ -121,6 +121,18 @@ double Game::averageTimeSeconds() const
     return static_cast<double>(m_totalTimeSeconds) / m_gamesWon;
 }
 
+void Game::registerFinishedGame(int elapsedSeconds)
+{
+    if (elapsedSeconds < 0) {
+        return;
+    }
+    ++m_gamesWon;
+    m_totalTimeSeconds += elapsedSeconds;
+    if (m_bestTimeSeconds < 0 || elapsedSeconds < m_bestTimeSeconds) {
+        m_bestTimeSeconds = elapsedSeconds;
+    }
+}
+
 int Game::solutionAt(int row, int col) const
 {
     if (row < 0 || row >= Board::Size || col < 0 || col >= Board::Size) {

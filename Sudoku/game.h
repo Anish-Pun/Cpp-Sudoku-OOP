@@ -69,7 +69,7 @@ public:
     int gamesWon() const { return m_gamesWon; }
     int bestTimeSeconds() const { return m_bestTimeSeconds; }
     double averageTimeSeconds() const;
-
+    void registerFinishedGame(int elapsedSeconds);
 private:
     Board      m_board;      // OOP: Composition
     Difficulty m_difficulty; // OOP: Encapsulation
