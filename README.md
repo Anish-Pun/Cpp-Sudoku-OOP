@@ -15,7 +15,7 @@ A fully object-oriented Sudoku game built using **C++** and **Qt**.
 
 ##  Features (Not finished yet) 
 - ✔️ Playable Sudoku game with Qt GUI   
-- ❌ Difficulty modes (Easy / Medium / Hard)  
+- ✔️ Difficulty modes (Easy / Medium / Hard)  
 - ✔️ Automatic validation  
 - ✔️ Automatic Solve 
 - ❌ Notes ( Pencil)
@@ -41,9 +41,11 @@ Cpp-Sudoku-OOP/
     │   └── mainwindow.ui
     │
     ├── Header Files/              # Header (.h) files
+    │   └── mainwindow.h
     │   ├── ...
     │
     └── Source Files/              # C++ source (.cpp) files
+        └── mainwindow.cpp
         ├── ...
 
 ```
