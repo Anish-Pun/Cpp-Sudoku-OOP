@@ -328,6 +328,9 @@ void MainWindow::on_btnStats_clicked()
         m_statsWindow = new PlayerStats(this);
         m_statsWindow->setAttribute(Qt::WA_DeleteOnClose);
         m_statsWindow->setModal(false);
+        connect(m_statsWindow, &QObject::destroyed, this, [this]() {
+            m_statsWindow = nullptr;
+        });
     }
 
     updateStatsWindow();
