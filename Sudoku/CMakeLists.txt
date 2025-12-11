@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         cell.h cell.cpp
         board.h board.cpp
         game.h game.cpp
+        playerstats.h playerstats.cpp playerstats.ui
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Sudoku APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -33,6 +33,7 @@ private slots:
     void on_btnCheck_clicked(); // Checking if btns of the ui works
     void on_btnNewGame_clicked();
     void on_btnSolve_clicked();
+    void on_btnStats_clicked();
     void updateTimer();
 };
 

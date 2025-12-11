@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QTimer>
+#include "playerstats.h"
 
 MainWindow::MainWindow(sudoku::AbstractGame& game, QWidget *parent)
     : QMainWindow(parent)
@@ -309,6 +310,14 @@ void MainWindow::on_btnSolve_clicked()
         "Sudoku",
         "De oplossing is ingevuld."
         );
+}
+
+void MainWindow::on_btnStats_clicked()
+{
+    PlayerStats *stats = new PlayerStats(this);
+    stats->setAttribute(Qt::WA_DeleteOnClose);
+    stats->setModal(false); // allow interacting with main window too
+    stats->show();
 }
 
 void MainWindow::updateTimer()
