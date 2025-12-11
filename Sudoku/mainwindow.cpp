@@ -192,6 +192,7 @@ void MainWindow::onCellChanged(int row, int column)
         if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
             game->registerFinishedGame(m_elapsedSeconds);
         }
+        updateStatsWindow();
         QMessageBox::information(this, "Sudoku",
                                  "Gefeliciteerd! Het bord is volledig en correct.");
     }
@@ -293,6 +294,7 @@ void MainWindow::on_btnNewGame_clicked()
     m_timer->start(1000);  // elke 1000 ms -> updateTimer()
 
     qDebug() << "New game started with difficulty" << ui->comboDifficulty->currentText();
+    updateStatsWindow();
 }
 
 void MainWindow::on_btnSolve_clicked()
@@ -306,6 +308,7 @@ void MainWindow::on_btnSolve_clicked()
         game->registerFinishedGame(m_elapsedSeconds);
     }
 
+    updateStatsWindow();
     // UI updaten
     {
         QSignalBlocker blocker(ui->tableSudoku);
@@ -321,19 +324,32 @@ void MainWindow::on_btnSolve_clicked()
 
 void MainWindow::on_btnStats_clicked()
 {
-    PlayerStats *stats = new PlayerStats(this);
-    stats->setAttribute(Qt::WA_DeleteOnClose);
-    stats->setModal(false); // allow interacting with main window too
+    if (!m_statsWindow) {
+        m_statsWindow = new PlayerStats(this);
+        m_statsWindow->setAttribute(Qt::WA_DeleteOnClose);
+        m_statsWindow->setModal(false);
+    }
+
+    updateStatsWindow();
+
+    m_statsWindow->show();
+    m_statsWindow->raise();
+    m_statsWindow->activateWindow();
+}
+
+void MainWindow::updateStatsWindow()
+{
+    if (!m_statsWindow) {
+        return;
+    }
 
     if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
-        stats->setStats(
+        m_statsWindow->setStats(
             game->gamesPlayed(),
             game->gamesWon(),
             game->bestTimeSeconds(),
             game->averageTimeSeconds());
     }
-
-    stats->show();
 }
 
 void MainWindow::updateTimer()

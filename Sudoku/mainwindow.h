@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "game.h"
 
+class PlayerStats;
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -25,8 +26,10 @@ private:
     QTimer *m_timer;
     int     m_elapsedSeconds;
 
+    PlayerStats* m_statsWindow = nullptr;
     void setupBoardAppearance();  // alleen looks
     void loadFromGame();          // Board -> UI
+    void updateStatsWindow();
 
 private slots:
     void onCellChanged(int row, int column); // UI -> Game
