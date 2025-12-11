@@ -302,6 +302,10 @@ void MainWindow::on_btnSolve_clicked()
     // Timer stoppen
     m_timer->stop();
 
+    if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
+        game->registerFinishedGame(m_elapsedSeconds);
+    }
+
     // UI updaten
     {
         QSignalBlocker blocker(ui->tableSudoku);
