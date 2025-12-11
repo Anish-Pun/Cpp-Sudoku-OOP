@@ -23,7 +23,7 @@ A fully object-oriented Sudoku game built using **C++** and **Qt**.
 ---
 
 # How to Run
-- See [detailed instructions](HowToRun.md) for the project.
+- See [detailed instructions](Documentation/HowToRun.md) for the project.
 ---
 
 # Project Structure

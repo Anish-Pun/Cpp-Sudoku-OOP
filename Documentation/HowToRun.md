@@ -28,29 +28,29 @@
 
 1. Open **Qt Creator**.
 
-   ![Qt Creator start screen](Resources/QtCreator.png)
+   ![Qt Creator start screen](../Resources/QtCreator.png)
 
 2. Click **Open Project** (top-right or `File → Open File or Project...`).
 
-   ![Open project dialog](Resources/QtCreatorOpenProject.png)
+   ![Open project dialog](../Resources/QtCreatorOpenProject.png)
 
 3. Navigate to the folder where you cloned the repository.
 
-   ![Navigate to the project folder](Resources/Navigation.png)
+   ![Navigate to the project folder](../Resources/Navigation.png)
 
 4. Select the file named **`CMakeLists.txt`** inside the `Sudoku` directory and open it.
 
-   ![Select CMakeLists.txt](Resources/Cmake.png)
+   ![Select CMakeLists.txt](../Resources/Cmake.png)
 
 5. When Qt Creator asks you to *Configure Project*, click **Configure**.
 
-   ![Configure project](Resources/Configure.png)
+   ![Configure project](../Resources/Configure.png)
 
 6. Click **Run** (the green **Play** button at the bottom left under `Debug (imported)`) to start the Sudoku application. This will also build the project if needed.
 
-   ![Run the Sudoku GUI](Resources/Run.png)
+   ![Run the Sudoku GUI](../Resources/Run.png)
 
 7. The Sudoku GUI should appear.
 
-   ![Sudoku GUI](Resources/SudokuGui.png)
+   ![Sudoku GUI](../Resources/SudokuGui.png)
 ---
