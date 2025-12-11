@@ -19,6 +19,9 @@ public:
                   int gamesWon,
                   int bestTimeSeconds,
                   double averageTimeSeconds);
+                  
+private slots:
+    void on_btnClose_clicked();
 
 private:
     Ui::PlayerStats *ui;

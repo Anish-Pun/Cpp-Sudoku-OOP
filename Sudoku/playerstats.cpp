@@ -41,3 +41,8 @@ void PlayerStats::setStats(int gamesPlayed,
         ui->valueAverageTime->setText(formatTime(avgSecs));
     }
 }
+
+void PlayerStats::on_btnClose_clicked()
+{
+    close();   
+}
