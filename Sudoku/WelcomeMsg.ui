@@ -6,45 +6,91 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>480</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sudoku - Welcome</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #adb5bd, stop:1 #adb5bd);
+}
+
+QPushButton {
+    background-color: #7ecefd;
+    color: #ffffffff;
+    border: 2px solid #000000ff;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 220px;
+    min-height: 45px;
+}
+
+QPushButton:hover {
+    background-color: #7ecefd;
+    border: 2px solid #7ecefd;
+}
+
+QPushButton:pressed {
+    background-color: #b86aff;
+    border: 2px solid #b86aff;
+}
+
+QPushButton#btnExit {
+    background-color: #e0e0e0;
+    border: 2px solid #d0d0d0;
+    color: #666666;
+}
+
+QPushButton#btnExit:hover {
+    background-color: #d0d0d0;
+    border: 2px solid #c0c0c0;
+}
+
+QPushButton#btnExit:pressed {
+    background-color: #c0c0c0;
+    border: 2px solid #b0b0b0;
+}
+
+QLabel#labelTitle {
+    color: #4a4a4a;
+    background: transparent;
+    font-weight: bold;
+}
+
+QLabel#labelSubtitle {
+    color: #7a7a7a;
+    background: transparent;
+}
+
+QLabel#labelAuthor {
+    color: #9a9a9a;
+    background: transparent;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QLabel" name="labelTitle">
-     <property name="font">
-      <font>
-       <pointsize>18</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Welcome to Sudoku!</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
+   <property name="spacing">
+    <number>18</number>
+   </property>
+   <property name="leftMargin">
+    <number>50</number>
+   </property>
+   <property name="topMargin">
+    <number>40</number>
+   </property>
+   <property name="rightMargin">
+    <number>50</number>
+   </property>
+   <property name="bottomMargin">
+    <number>35</number>
+   </property>
    <item>
     <spacer name="verticalSpacer_top">
-     <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
      </property>
@@ -57,16 +103,58 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="btnNewGame">
-     <property name="minimumSize">
+    <widget class="QLabel" name="labelTitle">
+     <property name="font">
+      <font>
+       <pointsize>26</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>SUDOKU</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="labelSubtitle">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Welcome to the Game</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignCenter</set>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #7a7a7a;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>200</width>
+       <width>20</width>
        <height>50</height>
       </size>
      </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QPushButton" name="btnNewGame">
      <property name="font">
       <font>
        <pointsize>12</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -76,15 +164,10 @@
    </item>
    <item>
     <widget class="QPushButton" name="btnLoadGame">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>50</height>
-      </size>
-     </property>
      <property name="font">
       <font>
        <pointsize>12</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -94,15 +177,10 @@
    </item>
    <item>
     <widget class="QPushButton" name="btnExit">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>50</height>
-      </size>
-     </property>
      <property name="font">
       <font>
        <pointsize>12</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="text">
@@ -118,7 +196,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>40</height>
+       <height>50</height>
       </size>
      </property>
     </spacer>
@@ -128,7 +206,6 @@
      <property name="font">
       <font>
        <pointsize>9</pointsize>
-       <italic>true</italic>
       </font>
      </property>
      <property name="text">
