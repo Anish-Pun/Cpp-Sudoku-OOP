@@ -17,6 +17,9 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        WelcomeMsg.cpp
+        WelcomeMsg.h
+        WelcomeMsg.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -27,6 +30,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         board.h board.cpp
         game.h game.cpp
         playerstats.h playerstats.cpp playerstats.ui
+        WelcomeMsg.h WelcomeMsg.cpp WelcomeMsg.ui
+        PlayerStorage.h PlayerStorage.cpp
+        gameinitializer.h gameinitializer.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Sudoku APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

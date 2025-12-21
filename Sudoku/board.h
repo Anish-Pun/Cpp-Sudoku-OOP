@@ -31,6 +31,9 @@ public:
     void setValue(int row, int col, int value);
     int  valueAt(int row, int col) const;
 
+    // functie met const reference parameter
+    void updateCell(int row, int col, const Cell& cell);
+
     // OOP: inline functie zodat snelle bounds-check direct in header zit
     bool isInside(int row, int col) const
     {

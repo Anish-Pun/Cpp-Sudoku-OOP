@@ -53,6 +53,14 @@ Board::Board(const std::array<std::array<int, Size>, Size>& values)
     }
 }
 
+// functie met const reference parameter
+void Board::updateCell(int row, int col, const Cell& cell)
+{
+    if (isInside(row, col)) {
+        m_cells[row][col] = cell;
+    }
+}
+
 // OOP: copy constructor
 Board::Board(const Board& other)
 {

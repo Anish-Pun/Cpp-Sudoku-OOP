@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "game.h"          // sudoku::Game
-#include "board.h"         // sudoku::Board
+#include "game.h"          
+#include "board.h"        
 
 #include <QHeaderView>
 #include <QFont>
@@ -196,6 +196,7 @@ void MainWindow::onCellChanged(int row, int column)
             game->registerFinishedGame(m_elapsedSeconds);
         }
         updateStatsWindow();
+        savePlayerData(); // Auto-save after game completion
         QMessageBox::information(this, "Sudoku",
                                  "Gefeliciteerd! Het bord is volledig en correct.");
     }
@@ -298,6 +299,7 @@ void MainWindow::on_btnNewGame_clicked()
 
     qDebug() << "New game started with difficulty" << ui->comboDifficulty->currentText();
     updateStatsWindow();
+    savePlayerData(); // Save after starting new game (gamesPlayed increments)
 }
 
 void MainWindow::on_btnSolve_clicked()
@@ -312,6 +314,7 @@ void MainWindow::on_btnSolve_clicked()
     }
 
     updateStatsWindow();
+    savePlayerData(); // Auto-save after solve
     // UI updaten
     {
         QSignalBlocker blocker(ui->tableSudoku);
@@ -355,6 +358,13 @@ void MainWindow::updateStatsWindow()
             game->gamesWon(),
             game->bestTimeSeconds(),
             game->averageTimeSeconds());
+    }
+}
+
+void MainWindow::savePlayerData()
+{
+    if (auto* game = dynamic_cast<sudoku::Game*>(&m_game)) {
+        game->savePlayerData();
     }
 }
 

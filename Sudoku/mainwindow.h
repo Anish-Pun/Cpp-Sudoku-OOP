@@ -30,6 +30,7 @@ private:
     void setupBoardAppearance();  // alleen looks
     void loadFromGame();          // Board -> UI
     void updateStatsWindow();
+    void savePlayerData();        // Save player stats to file
 
 private slots:
     void onCellChanged(int row, int column); // UI -> Game
