@@ -35,6 +35,7 @@ MainWindow::MainWindow(sudoku::AbstractGame& game, QWidget *parent)
             this, &MainWindow::updateTimer);
 
     on_btnNewGame_clicked();
+    connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::showHelpDialog);
 }
 
 MainWindow::~MainWindow()
@@ -380,4 +381,18 @@ void MainWindow::updateTimer()
             .arg(minutes, 2, 10, QLatin1Char('0'))
             .arg(seconds, 2, 10, QLatin1Char('0'))
         );
+}
+
+void MainWindow::showHelpDialog()
+{
+    QMessageBox::information(this, "Sudoku Help",
+        "<b>How to Play Sudoku:</b><br><br>"
+        "Fill the grid so that every row, column, and 3x3 box contains the numbers 1 to 9.<br>"
+        "Use the controls above to start a new game, check your solution, or solve the puzzle.<br><br>"
+        "<b>Tips:</b><br>"
+        "- Click a cell to enter a number.<br>"
+        "- Use 'Check' to validate your solution.<br>"
+        "- Use 'Solve' to see the answer.<br>"
+        "- Your stats are tracked for each player.<br><br>"
+        "Good luck and have fun! 🧩");
 }

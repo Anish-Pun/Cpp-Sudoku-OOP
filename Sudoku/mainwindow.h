@@ -39,6 +39,7 @@ private slots:
     void on_btnSolve_clicked();
     void on_btnStats_clicked();
     void updateTimer();
+    void showHelpDialog();
 };
 
 #endif // MAINWINDOW_H
