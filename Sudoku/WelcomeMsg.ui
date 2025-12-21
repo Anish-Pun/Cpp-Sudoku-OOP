@@ -6,72 +6,72 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>450</height>
+    <width>400</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Sudoku - Welcome</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog {
-    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-        stop:0 #adb5bd, stop:1 #adb5bd);
+   <string notr="true">
+QDialog {
+    background-color: #fdfdfd;
+    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;;
 }
 
+/* ===== Title ===== */
+QLabel#labelTitle {
+    color: #111111;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* ===== Subtitle ===== */
+QLabel#labelSubtitle {
+    color: #555555;
+}
+
+/* ===== Author ===== */
+QLabel#labelAuthor {
+    color: #888888;
+}
+
+/* ===== Buttons (Classic Look) ===== */
 QPushButton {
-    background-color: #7ecefd;
-    color: #ffffffff;
-    border: 2px solid #000000ff;
-    border-radius: 6px;
-    padding: 10px 20px;
-    font-size: 12px;
+    background-color: #ffffff;
+    color: #111111;
+    border: 2px solid #111111;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 13px;
     font-weight: bold;
     min-width: 220px;
-    min-height: 45px;
+    min-height: 42px;
 }
 
+/* Hover = light gray */
 QPushButton:hover {
-    background-color: #7ecefd;
-    border: 2px solid #7ecefd;
+    background-color: #f2f2f2;
 }
 
+/* Pressed = darker gray */
 QPushButton:pressed {
-    background-color: #b86aff;
-    border: 2px solid #b86aff;
-}
-
-QPushButton#btnExit {
     background-color: #e0e0e0;
-    border: 2px solid #d0d0d0;
-    color: #666666;
 }
 
-QPushButton#btnExit:hover {
-    background-color: #d0d0d0;
-    border: 2px solid #c0c0c0;
+/* Exit Button = subtle */
+QPushButton#btnExit {
+    border: 1px solid #999999;
+    color: #555555;
+    font-weight: normal;
 }
 
-QPushButton#btnExit:pressed {
-    background-color: #c0c0c0;
-    border: 2px solid #b0b0b0;
+QFrame {
+    background-color: transparent;
+    border: none;
 }
-
-QLabel#labelTitle {
-    color: #4a4a4a;
-    background: transparent;
-    font-weight: bold;
-}
-
-QLabel#labelSubtitle {
-    color: #7a7a7a;
-    background: transparent;
-}
-
-QLabel#labelAuthor {
-    color: #9a9a9a;
-    background: transparent;
-}</string>
+   </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -120,6 +120,9 @@ QLabel#labelAuthor {
    </item>
    <item>
     <widget class="QLabel" name="labelSubtitle">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="font">
       <font>
        <pointsize>10</pointsize>
@@ -131,61 +134,85 @@ QLabel#labelAuthor {
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: #7a7a7a;</string>
-     </property>
     </widget>
    </item>
    <item>
-    <spacer name="verticalSpacer">
+    <spacer name="verticalSpacerCard">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>50</height>
+       <height>30</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="btnNewGame">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>true</bold>
-      </font>
+    <widget class="QFrame" name="frameCard">
+     <property name="frameShape">
+      <enum>QFrame::Shape::StyledPanel</enum>
      </property>
-     <property name="text">
-      <string>New Game</string>
+     <property name="frameShadow">
+      <enum>QFrame::Shadow::Plain</enum>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnLoadGame">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Load Game</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btnExit">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Exit</string>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutCard">
+      <property name="spacing">
+       <number>18</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>20</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>20</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="btnNewGame">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Start New Game</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnLoadGame">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Continue Game</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnExit">
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Exit</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
@@ -196,13 +223,16 @@ QLabel#labelAuthor {
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>50</height>
+       <height>30</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
     <widget class="QLabel" name="labelAuthor">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="font">
       <font>
        <pointsize>9</pointsize>
