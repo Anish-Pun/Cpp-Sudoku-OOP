@@ -16,60 +16,56 @@
   <property name="styleSheet">
    <string notr="true">
 QDialog {
-    background-color: #fdfdfd;
-    font-family: &quot;Segoe UI&quot;, &quot;Arial&quot;;
+    background: qradialgradient(cx:0.5, cy:0.3, radius:1,
+        stop:0 #f8fafc, stop:1 #eef2ff);
+    font-family: "Segoe UI", "Roboto", "Arial";
 }
-
-/* ===== Title ===== */
 QLabel#labelTitle {
-    color: #111111;
-    font-weight: bold;
-    letter-spacing: 2px;
+    color: #4f46e5;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
 }
-
-/* ===== Subtitle ===== */
 QLabel#labelSubtitle {
-    color: #555555;
+    color: #4f5d75;
+    font-size: 15px;
+    margin-bottom: 8px;
 }
-
-/* ===== Author ===== */
-QLabel#labelAuthor {
-    color: #888888;
-}
-
-/* ===== Buttons (Classic Look) ===== */
 QPushButton {
-    background-color: #ffffff;
-    color: #111111;
-    border: 2px solid #111111;
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 13px;
-    font-weight: bold;
-    min-width: 220px;
-    min-height: 42px;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 240px;
 }
-
-/* Hover = light gray */
-QPushButton:hover {
-    background-color: #f2f2f2;
+QPushButton#btnNewGame {
+    background-color: #4f46e5;
+    color: white;
 }
-
-/* Pressed = darker gray */
-QPushButton:pressed {
-    background-color: #e0e0e0;
+QPushButton#btnNewGame:hover {
+    background-color: #4338ca;
 }
-
-/* Exit Button = subtle */
+QPushButton#btnLoadGame {
+    background-color: #eef2ff;
+    color: #3730a3;
+}
+QPushButton#btnLoadGame:hover {
+    background-color: #e0e7ff;
+}
 QPushButton#btnExit {
-    border: 1px solid #999999;
-    color: #555555;
-    font-weight: normal;
-}
-
-QFrame {
     background-color: transparent;
-    border: none;
+    color: #6b7280;
+}
+QFrame {
+    background-color: #fff;
+    border-radius: 16px;
+    border: 1px solid #e4e7ec;
+}
+QLabel#labelAuthor {
+    color: #9aa3af;
+    font-size: 11px;
+    font-style: italic;
 }
    </string>
   </property>
@@ -111,7 +107,7 @@ QFrame {
       </font>
      </property>
      <property name="text">
-      <string>SUDOKU</string>
+    <string>🧩 SUDOKU</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -129,7 +125,7 @@ QFrame {
       </font>
      </property>
      <property name="text">
-      <string>Welcome to the Game</string>
+    <string>Train your brain and enjoy! 🧠</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -182,7 +178,7 @@ QFrame {
          </font>
         </property>
         <property name="text">
-         <string>Start New Game</string>
+         <string>🎮  Start New Game</string>
         </property>
        </widget>
       </item>
@@ -195,7 +191,7 @@ QFrame {
          </font>
         </property>
         <property name="text">
-         <string>Continue Game</string>
+         <string>⏩  Continue Game</string>
         </property>
        </widget>
       </item>
@@ -208,7 +204,7 @@ QFrame {
          </font>
         </property>
         <property name="text">
-         <string>Exit</string>
+         <string>❌  Exit</string>
         </property>
        </widget>
       </item>
@@ -239,7 +235,7 @@ QFrame {
       </font>
      </property>
      <property name="text">
-      <string>Made by Anish</string>
+    <string>Made by Anish</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignmentFlag::AlignCenter</set>
