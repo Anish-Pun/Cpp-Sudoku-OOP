@@ -7,20 +7,23 @@
 ╚══════╝ ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ 
  ```                                                                  
 ---
-# Sudoku Cpp OOP Project
 
-A fully object-oriented Sudoku game built using **C++** and **Qt**.
+## Overview
+A fully object-oriented Sudoku game built with C++ and Qt. Features a user-friendly GUI, multiple difficulty levels, player statistics, and persistent player profiles.
 
 ---
 
 ## Features
 - ✔️ Playable Sudoku game with Qt GUI
 - ✔️ Difficulty modes (Easy / Medium / Hard)
-- ✔️ Automatic validation
-- ✔️ Automatic solve
-- ✔️ Player statistics tracking
-- ✔️ Save/load player progress
-- ✔️ Welcome message
+- ✔️ Tracks best and average completion times
+- ✔️ Automatic validation and error checking
+- ✔️ Automatic solve function
+- ✔️ Player statistics tracking (games played, wins, best time)
+- ✔️ Save/load player progress and profiles
+- ✔️ Welcome message and player selection
+- ✔️ Clean, responsive interface
+
 ---
 
 # How to Run
@@ -50,9 +53,13 @@ Cpp-Sudoku-OOP/
         ├── ...
 
 ```
-
 ---
-
-# Gui
+# GUI
 ![Current GUI](Resources/SudokuGui.png)
+
 ---
+## Author
+- [Anish](https://github.com/Anish-Pun)
+
+---
+*This project was created as a college assignment to demonstrate C++ and OOP principles with Qt.*
