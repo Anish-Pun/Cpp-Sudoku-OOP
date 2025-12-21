@@ -951,6 +951,7 @@ connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 ```
 
 3. test-driven development (= written test plan or unit tests)
+    - Zie [Experiments_Of_This_Project.md](Experiments_Of_This_Project.md) voor een gedetailleerde beschrijving van mijn test plan en ontwikkelingsproces.
 4. solve bug ticket (with pull request or commit message issue link and issue branch)
 5. report a bug ticket on another project
 6. usage of a GUI
