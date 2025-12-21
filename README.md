@@ -13,13 +13,14 @@ A fully object-oriented Sudoku game built using **C++** and **Qt**.
 
 ---
 
-##  Features (Not finished yet) 
-- ✔️ Playable Sudoku game with Qt GUI   
-- ✔️ Difficulty modes (Easy / Medium / Hard)  
-- ✔️ Automatic validation  
-- ✔️ Automatic Solve 
-- ❌ Notes ( Pencil)
-- ❌ Best Run
+## Features
+- ✔️ Playable Sudoku game with Qt GUI
+- ✔️ Difficulty modes (Easy / Medium / Hard)
+- ✔️ Automatic validation
+- ✔️ Automatic solve
+- ✔️ Player statistics tracking
+- ✔️ Save/load player progress
+- ✔️ Welcome message
 ---
 
 # How to Run
