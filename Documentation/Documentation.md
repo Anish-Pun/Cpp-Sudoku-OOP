@@ -824,7 +824,7 @@ bool GameInitializer::initializeGame(sudoku::Game& game, const QString& playerNa
 ```
 14. useful usage of lambda function
     - Ik gebruik lambdas voor compacte inline functies in template code, Qt connect statements, en thread callbacks.
-    - Lambdas maken code korter en duidelijker zonder aparte functies te hoeven definiëren.
+
 ```cpp
 // Lambda in template function call voor row conflict (board.cpp, regel 166-170)
 bool Board::rowHasConflict(int row) const {
@@ -953,12 +953,18 @@ connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
 3. test-driven development (= written test plan or unit tests)
     - Zie [Experiments_Of_This_Project.md](Experiments_Of_This_Project.md) voor een gedetailleerde beschrijving van mijn test plan en ontwikkelingsproces.
 4. solve bug ticket (with pull request or commit message issue link and issue branch)
+    - Niet gedaan
 5. report a bug ticket on another project
+    - Niet gedaan
 6. usage of a GUI
     - Volledige GUI applicatie met Qt framework.
     - `MainWindow` bevat een interactief Sudoku bord met `QTableWidget`.
     - Dialogen voor player selectie (`WelcomeMsg`) en statistieken (`PlayerStats`).
 7. usage of OpenGL or other 3D engine
+    - Niet gebruikt in dit project.
 8. useful usage of an external library (not Qt)
+    - Niet gebruikt in dit project.
 9. project that communicates (e.g. UART, BT) with hardware
+    - Niet gebruikt in dit project.
 10. a nice extra that you think that should deserve grading (stuff you put time in and is not rewarded by an item above)
+    - Extra aandacht besteed aan het verbeteren van de GUI-ervaring: aangepaste kleuren, nette layout, duidelijke feedback voor de gebruiker, en extra dialogen voor stats en spelersselectie. Dit alles om de applicatie gebruiksvriendelijker te maken.
